@@ -7,12 +7,11 @@ module.exports = {
     level: 'info',
     format: 'simple'
   },
-  es: {
-    host: 'http://localhost:9200',
-    index: 'filebeat-*'
-  },
   raven: {
     activate: false,
     dsn: ''
-  }
+  },
+  mongoDbUrl: 'mongodb://localhost:27017/api-particulier',
+  tokensPath: './tokens',
+  tokenService: 'db'
 }

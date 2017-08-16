@@ -3,9 +3,9 @@ const DbTokenService = require('./db-tokens.service')
 const FileTokenService = require('./file-tokens.service')
 const FranceConnectService = require('./france-connect.service')
 
-module.exports = Auth
+module.exports = AuthController
 
-function Auth (options) {
+function AuthController (options) {
   let fileTokenService, dbTokenService, initializedService
 
   const franceConnectService = new FranceConnectService(options)
@@ -18,7 +18,7 @@ function Auth (options) {
     initializedService = fileTokenService.initialize()
   }
 
-  this.canAccessApi = function (req, res, next) {
+  this.authorize = function (req, res, next) {
     const bearer = req.get('Authorization')
     let token = req.get('X-API-Key')
     // set defaults
@@ -42,11 +42,10 @@ function Auth (options) {
     function handleResult (result) {
       if (result) {
         req.logger.debug({ event: 'authorization' }, result.name + ' is authorized (' + result.role + ')')
-        req.consumer = result
+        res.data = result
         next()
       } else {
         req.logger.debug({ event: 'authorization' }, 'not authorized')
-        req.consumer = {}
         next(new StandardError('You are not authorized to use the api', {code: 401}))
       }
     }

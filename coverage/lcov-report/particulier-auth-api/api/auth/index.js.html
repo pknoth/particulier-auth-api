@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for particulier-auth-api/api/routes/index.js</title>
+    <title>Code coverage report for particulier-auth-api/api/auth/index.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../../index.html">all files</a> / <a href="index.html">particulier-auth-api/api/routes/</a> index.js
+      <a href="../../../index.html">all files</a> / <a href="index.html">particulier-auth-api/api/auth/</a> index.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>5/5</span>
+        <span class='fraction'>10/10</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>5/5</span>
+        <span class='fraction'>9/9</span>
       </div>
     </div>
   </div>
@@ -50,19 +50,37 @@
 5
 6
 7
-8</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+8
+9
+10
+11
+12
+13
+14</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const system = require('../system')
-const auth = require('../auth')
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = require('express')
+const Controller = require('./auth.controller')
+const format = require('../lib/utils/format')
 &nbsp;
-exports.configure = function (app, options) {
-  app.use('/api', system(options))
-  app.use('/api/auth', auth(options))
+module.exports = function (options) {
+  const router = express.Router()
+  const controller = new Controller(options)
+&nbsp;
+  router.get('/authorize', (req, res, next) =&gt; controller.authorize(req, res, next))
+&nbsp;
+  router.use('/', format)
+  return router
 }
 &nbsp;</pre></td></tr>
 </table></pre>
