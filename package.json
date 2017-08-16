@@ -53,6 +53,7 @@
     "raven": "^2.1.1",
     "standard-error": "^1.1.0",
     "string": "^3.3.3",
+    "superagent": "^3.5.2",
     "throng": "^4.0.0"
   }
 }
