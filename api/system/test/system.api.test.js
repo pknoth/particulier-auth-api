@@ -1,4 +1,5 @@
 const serverTest = require('./../../test/utils/server')
+const proxyrequire = require('proxyquire')
 
 describe('System API', () => {
   var server = serverTest()
@@ -36,6 +37,30 @@ describe('System API', () => {
       return api()
         .get('/api/not-existing')
         .expect(404)
+    })
+  })
+
+  describe('/api/introspect', () => {
+    describe('I have a bad token', () => {
+      beforeEach(() => {
+        proxyrequire('../system.controller', {
+          './db-tokens.service': class FakeTokenService {
+            initialize () {
+              return Promise.resolve(this)
+            }
+            getToken () {
+              return Promise.resolve(null)
+            }
+          }
+        })
+      })
+
+      it('should set consumer on req', () => {
+        return api()
+          .get('/api/introspect')
+          .query({'token': 'token-nok'})
+          .expect(404)
+      })
     })
   })
 })

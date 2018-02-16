@@ -21,11 +21,7 @@ describe('Db Token service', () => {
 
   it('gets a token when the token exists', () => {
     return service.getToken('test-token').then((token) => {
-      expect(token).to.deep.equal({
-        '_id': 'test-token',
-        'name': 'Jeu de test',
-        'mail': 'someone@somewhere.com'
-      })
+      expect(token.name).to.equal('Jeu de test')
     })
   })
 
